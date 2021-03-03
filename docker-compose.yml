@@ -23,7 +23,7 @@ services:
     working_dir: '/var/www/html'
     volumes:
       - ./php/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
-      - ./www:/var/www:ro
+      - ./www:/var/www
       - phpsocket:/phpsocket
     networks:
       - php-network
