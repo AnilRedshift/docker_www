@@ -9,5 +9,22 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./www:/var/www:ro
+    networks:
+      - the-network
     ports:
       - '8080:80'
+
+  php:
+    build:
+      context: ./php
+    volumes:
+      - sock:/sock
+      - ./www:/www/app:ro
+      - ./php/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+    networks:
+      - the-network
+volumes:
+  sock:
+
+networks:
+  the-network:
