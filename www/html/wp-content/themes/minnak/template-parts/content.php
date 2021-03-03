@@ -30,7 +30,7 @@
 						</svg>
 					</div>
 				<?php endif ?>
-				<?php	if ( has_post_thumbnail() && ! post_password_required() ) { ?>
+				<?php	if ( has_post_thumbnail() && ! post_password_required() && (!is_singular() || has_post_format( 'image'))) { ?>
 						<div class="img-frame">
 							<?php minnak_post_thumbnail(); ?>
 						</div>
