@@ -25,6 +25,7 @@ services:
       - ./php/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
       - ./php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./www:/var/www
+      - ./wp-config.php:/var/www/html/wp-config.php:ro
       - phpsocket:/phpsocket
     networks:
       - php-network
@@ -39,6 +40,21 @@ services:
       - db.env
     volumes:
       - ./db/data:/var/lib/mysql
+    networks:
+      - sql-network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - db.env
+    ports:
+      - '8037:80'
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    restart: 'on-failure'
+    depends_on:
+      - db
     networks:
       - sql-network
 

@@ -1,5 +1,6 @@
 /logs/*.log
 db.env
+wp-config.php
 
 /db/data/*
 !/db/data/.keep
