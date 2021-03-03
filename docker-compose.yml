@@ -1,6 +1,17 @@
 version: '3.9'
 
 services:
+  acme:
+    build:
+      context: ./acme
+      args:
+        - LETS_ENCRYPT_EMAIL=${LETS_ENCRYPT_EMAIL}
+    restart: always
+    env_file:
+      - acme.env
+    volumes:
+      - ./certs:/root/.acme.sh/terminal.space
+
   nginx:
     build:
       context: ./nginx

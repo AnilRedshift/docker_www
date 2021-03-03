@@ -1,9 +1,15 @@
-/logs/*.log
-db.env
+# Don't save secret files
+/*.env
 wp-config.php
 
+# Don't save database files
 /db/data/*
 !/db/data/.keep
 
+# Dont save wordpressbackup files
 /www/html/wp-content/updraft/*
 !/www/html/wp-content/updraft/web.config
+
+# Don't save SSL certs
+/certs/*
+!/certs/.keep
