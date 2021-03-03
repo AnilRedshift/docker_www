@@ -10,23 +10,41 @@ services:
       - ./www:/var/www:ro
       - phpsocket:/phpsocket
     networks:
-      - the-network
+      - php-network
+    depends_on:
+      - php
     ports:
       - '8080:8080'
 
   php:
     build:
       context: ./php
+    restart: 'on-failure'
     working_dir: '/var/www/html'
     volumes:
       - ./php/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
       - ./www:/var/www:ro
       - phpsocket:/phpsocket
     networks:
-      - the-network
+      - php-network
+      - sql-network
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.5-focal
+    restart: 'on-failure'
+    env_file:
+      - db.env
+    volumes:
+      - ./db/data:/var/lib/mysql
+    networks:
+      - sql-network
 
 networks:
-  the-network:
+  php-network:
+    driver: bridge
+  sql-network:
     driver: bridge
 
 volumes:
