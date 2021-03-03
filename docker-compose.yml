@@ -21,6 +21,8 @@ services:
       context: ./php
     restart: 'on-failure'
     working_dir: '/var/www/html'
+    environment:
+      - PAGER='busybox more'
     volumes:
       - ./php/www.conf:/usr/local/etc/php-fpm.d/zz-docker.conf:ro
       - ./php/php.ini:/usr/local/etc/php/php.ini:ro

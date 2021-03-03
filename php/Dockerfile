@@ -16,6 +16,11 @@ RUN set -ex && \
   mysqli \
   bcmath
 
+RUN set -ex && \
+  wget -nv -O /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+  chmod +x /usr/local/bin/wp
+
+
 RUN addgroup -g 1000 -S docker
 RUN adduser -u 1000 -S -G docker docker
 
