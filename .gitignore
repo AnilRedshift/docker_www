@@ -4,3 +4,6 @@ wp-config.php
 
 /db/data/*
 !/db/data/.keep
+
+/www/html/wp-content/updraft/*
+!/www/html/wp-content/updraft/web.config
