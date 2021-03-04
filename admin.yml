@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - db.env
+    ports:
+      - '8037:80'
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+    restart: 'on-failure'
+    depends_on:
+      - db
+    networks:
+      - sql-network
