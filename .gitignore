@@ -10,6 +10,10 @@ wp-config.php
 /www/html/wp-content/updraft/*
 !/www/html/wp-content/updraft/web.config
 
+# Don't save uploads folder (this is saved in backups)
+/www/html/wp-content/uploads/*
+
 # Don't save SSL certs
 /certs/*
 !/certs/.keep
+
