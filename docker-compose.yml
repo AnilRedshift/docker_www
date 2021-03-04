@@ -21,8 +21,6 @@ services:
       - ./certs:/etc/ssl/certs/private/terminal.space
     networks:
       - www-network
-    depends_on:
-      - php
     ports:
       - '80:80'
       - '443:443'
@@ -37,10 +35,6 @@ services:
       - phpsocket:/phpsocket
     networks:
       - www-network
-    depends_on:
-      - php
-    ports:
-      - '8080:8080'
 
   php:
     build:
@@ -70,6 +64,15 @@ services:
       - ./db/data:/var/lib/mysql
     networks:
       - sql-network
+
+  backup:
+    build:
+      context: ./backup
+    restart: always
+    env_file:
+      - backup.env
+    volumes:
+      - ./www:/var/www:ro
 
 networks:
   www-network:
