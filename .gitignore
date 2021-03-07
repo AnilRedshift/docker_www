@@ -1,5 +1,7 @@
 # Don't save secret files
-/*.env
+secrets/
+!/secrets/.keep
+*.env
 wp-config.php
 
 # Don't save database files
