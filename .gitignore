@@ -1,6 +1,11 @@
 # Don't save secret files
-secrets/
+
+secrets/*
+/secrets/certs/*
 !/secrets/.keep
+!secrets/certs
+!/secrets/certs/.keep
+# Don't save SSL certs
 *.env
 wp-config.php
 
@@ -15,7 +20,4 @@ wp-config.php
 # Don't save uploads folder (this is saved in backups)
 /www/html/wp-content/uploads/*
 
-# Don't save SSL certs
-/certs/*
-!/certs/.keep
 
