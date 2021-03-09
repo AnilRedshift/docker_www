@@ -21,8 +21,8 @@ ADD ./renew.sh /root/periodic/renew.sh
 ADD ./heartbeat.sh /root/periodic/heartbeat.sh
 RUN chmod +x /root/periodic/*
 # Hourly heartbeat
-RUN echo '16  *  *  *  *  /root/periodic/heartbeat.sh' > /etc/crontabs/root
+RUN echo '16  *  *  *  *  /root/periodic/heartbeat.sh' >> /etc/crontabs/root
 # Update the certs monthly on the 8th of the month
-RUN echo '18  8  8  *  *  /root/periodic/renew.sh' > /etc/crontabs/root
+RUN echo '18  8  8  *  *  /root/periodic/renew.sh' >> /etc/crontabs/root
 
 CMD crond -l 2 -f
