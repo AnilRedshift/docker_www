@@ -20,4 +20,7 @@ wp-config.php
 # Don't save uploads folder (this is saved in backups)
 /www/html/wp-content/uploads/*
 
+# Don't save the folder used to download wordpress upgrades
+/www/html/wp-content/upgrade/*
+
 
