@@ -11,6 +11,9 @@ services:
       - secrets/acme.env
     volumes:
       - ./secrets/certs:/root/.acme.sh/terminal.space
+      - ./secrets/nginx_ssh_rsa:/nginx_ssh_rsa:ro
+    networks:
+      - acme-network
 
   nginx_reverse_proxy:
     build:
@@ -21,6 +24,7 @@ services:
       - ./secrets/certs:/etc/ssl/certs/private/terminal.space:ro
     networks:
       - www-network
+      - acme-network
     ports:
       - '80:80'
       - '443:443'
@@ -85,6 +89,12 @@ networks:
         - subnet: 192.168.32.0/24
   sql-network:
     driver: bridge
+  acme-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.31.0/24
 
 volumes:
   phpsocket:

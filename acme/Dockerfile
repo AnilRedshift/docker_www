@@ -3,7 +3,7 @@ RUN apk update
 ARG LETS_ENCRYPT_EMAIL
 ENV LETS_ENCRYPT_EMAIL $LETS_ENCRYPT_EMAIL
 RUN apk update
-RUN apk add --no-cache openssl socat
+RUN apk add --no-cache openssl openssh socat
 
 # Install acme.sh
 RUN wget -O -  https://get.acme.sh | sh -s email=${LETS_ENCRYPT_EMAIL}
