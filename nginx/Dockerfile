@@ -1,4 +1,4 @@
-FROM nginx:1.19.8-alpine
+FROM nginx:1.19-alpine
 
 RUN addgroup -g 1000 -S docker
 RUN adduser -u 1000 -S -G docker docker

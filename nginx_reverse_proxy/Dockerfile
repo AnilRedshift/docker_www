@@ -1,4 +1,4 @@
-FROM nginx:1.19.8-alpine
+FROM nginx:1.19-alpine
 
 RUN set -ex && \
   apk update && \
