@@ -231,6 +231,13 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 				 */
 				$quota_info = $dropbox->quotaInfo();
 
+				// Access token expired try to refresh and then call quota info again
+				if ("401" == $quota_info['code']) {
+					$this->log('HTTP code 401 (unauthorized) code returned from Dropbox; attempting to refresh access token');
+					$dropbox->refreshAccessToken();
+					$quota_info = $dropbox->quotaInfo();
+				}
+
 				if ("200" != $quota_info['code']) {
 					$message = "account/info did not return HTTP 200; returned: ". $quota_info['code'];
 				} elseif (!isset($quota_info['body'])) {
@@ -299,6 +306,10 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 				if (empty($response['code']) || "200" != $response['code']) {
 					$this->log('Unexpected HTTP code returned from Dropbox: '.$response['code']." (".serialize($response).")");
 					if ($response['code'] >= 400) {
+						if ($response['code'] == 401) {
+							$this->log('HTTP code 401 returned from Dropbox, refreshing access token');
+							$dropbox->refreshAccessToken();
+						}
 						$this->log(sprintf(__('error: failed to upload file to %s (see log file for more)', 'updraftplus'), $file), 'error');
 						$file_success = 0;
 					} else {
@@ -367,8 +378,8 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	/**
 	 * This method gets a list of files from the remote stoage that match the string passed in and returns an array of backups
 	 *
-	 * @param  string $match a substring to require (tested via strpos() !== false)
-	 * @return array
+	 * @param  String $match a substring to require (tested via strpos() !== false)
+	 * @return Array
 	 */
 	public function listfiles($match = 'backup_') {
 
@@ -673,7 +684,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 * Modifies handerbar template options
 	 *
 	 * @param array $opts
-	 * @return array - Modified handerbar template options
+	 * @return Array - Modified handerbar template options
 	 */
 	public function transform_options_for_template($opts) {
 		if (!empty($opts['tk_access_token'])) {
@@ -696,7 +707,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	 * Gives settings keys which values should not passed to handlebarsjs context.
 	 * The settings stored in UD in the database sometimes also include internal information that it would be best not to send to the front-end (so that it can't be stolen by a man-in-the-middle attacker)
 	 *
-	 * @return array - Settings array keys which should be filtered
+	 * @return Array - Settings array keys which should be filtered
 	 */
 	public function filter_frontend_settings_keys() {
 		return array(
@@ -931,7 +942,7 @@ class UpdraftPlus_BackupModule_dropbox extends UpdraftPlus_BackupModule {
 	/**
 	 * This basically reproduces the relevant bits of bootstrap.php from the SDK
 	 *
-	 * @param  boolean $deauthenticate indicates if we should bootstrap for a deauth or auth request
+	 * @param  Boolean $deauthenticate indicates if we should bootstrap for a deauth or auth request
 	 * @return object
 	 */
 	public function bootstrap($deauthenticate = false) {
