@@ -9,6 +9,7 @@ RUN set -ex && \
 
 RUN set -ex && \
   docker-php-ext-install \
+  exif \
   zip \
   gd \
   soap \
