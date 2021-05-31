@@ -27,17 +27,9 @@ class Meow_MWL_Core {
 		}
 
 		// The Lightbox should be completely off if the request is asynchronous
-		if ( property_exists( 'MeowCommon_Helpers', 'version' ) && version_compare( MeowCommon_Admin::$version, '3.3'  ) >= 0 ) {
-			if ( MeowCommon_Helpers::is_asynchronous_request() || MeowCommon_Helpers::is_pagebuilder_request() ) {
-				return;
-			}
-		}
-		else {
-			// Let's remove this else when all plugins are running Meow Common 3.3 (Mars 2021+)
-			if ( MeowCommon_Helpers::is_asynchronous_request() || MeowCommon_Helpers::is_divi_builder() )
-				return;
-			if ( isset( $_GET['cs-render'] ) && $_GET['cs-render'] === '1' )
-				return;
+		$recent_common = method_exists( 'MeowCommon_Helpers', 'is_pagebuilder_request' );
+		if ( MeowCommon_Helpers::is_asynchronous_request() || ( $recent_common && MeowCommon_Helpers::is_pagebuilder_request() ) ) {
+			return;
 		}
 
 		$this->imageSize = get_option( 'mwl_image_size', 'srcset' );

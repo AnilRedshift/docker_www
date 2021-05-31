@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: MiNNaK\n"
-"POT-Creation-Date: 2021-01-18 11:32+0300\n"
-"PO-Revision-Date: 2021-01-18 11:32+0300\n"
+"POT-Creation-Date: 2021-05-11 14:25+0100\n"
+"PO-Revision-Date: 2021-05-11 14:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: tamermancar\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -76,7 +76,7 @@ msgstr "Tüm Hakları Saklıdır"
 
 #: functions.php:302
 msgid "Theme: MiNNaK by "
-msgstr "Tema: MiNNaK, Geliştirici: "
+msgstr "Tema: MiNNaK, Tema Yapımcısı: "
 
 #: header.php:26
 msgid "Loading"

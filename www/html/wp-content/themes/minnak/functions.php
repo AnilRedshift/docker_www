@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'MINNAK_VERSION' ) ) {
-	define( 'MINNAK_VERSION', '2.1.4' );
+	define( 'MINNAK_VERSION', '2.1.5' );
 }
 
 function minnak_loading_inline_style() {

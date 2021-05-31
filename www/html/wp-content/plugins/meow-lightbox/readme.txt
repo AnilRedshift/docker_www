@@ -2,9 +2,9 @@
 Contributors: TigrouMeow, kywyz
 Tags: lightbox, responsive, exif, media, gps, map, photography, photo, gutenberg, image, images, gallery, retina
 Requires at least: 5.0
-Tested up to: 5.6
+Tested up to: 5.7
 Requires PHP: 5.6
-Stable tag: 3.0.4
+Stable tag: 3.0.8
 
 This is a responsive minimal Lightbox built for photographers, which displays EXIF information. This lightbox is highly optimized and designed to be fast and beautiful.
 
@@ -54,6 +54,10 @@ Replace all the files. Nothing else to do.
 Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
 
 == Changelog ==
+
+= 3.0.8 (2021/05/22) =
+* Update: More natural zoom.
+* Fix: Tiny fixes and improvements.
 
 = 3.0.4 =
 * Add: Option for magnification.

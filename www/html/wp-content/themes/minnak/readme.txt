@@ -4,7 +4,7 @@ Tags: custom-logo, custom-menu, featured-images, threaded-comments, translation-
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Version: 2.1.4
+Version: 2.1.5
 License: GNU General Prefer License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,10 @@ MiNNaK is a clean, minimal and easy to use WordPress blog and portfolio theme. W
 MiNNaK includes support for WooCommerce, Contact Form 7 and Infinite Scroll in Jetpack.
 
 == Changelog ==
+= 2.1.5 - May 11 2021 =
+* tested : 100% compatible with WP 5.7.1
+* updated : tr_TR translation file
+
 = 2.1.4 - February 05 2021 =
 * tested : 100% compatible with WP 5.6.1
 * fixed : Post navigation position problem
