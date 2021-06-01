@@ -29,6 +29,11 @@ RUN mkdir -p /phpsocket
 RUN chown -Rf docker:docker \
   /phpsocket
 
+# Run wp-cron every 10 minutes. Note that cron doesnt actually run on the image
+# So this works by overriding the entrypoint on a second container
+# TODO: Downside is this runs as root, not as the docker user ()
+RUN echo '*/10  *  *  *  *  cd /var/www/html; php /var/www/html/wp-cron.php' >> /etc/crontabs/root
+
 USER docker
 
 CMD ["php-fpm", "--nodaemonize"]
