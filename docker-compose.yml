@@ -111,6 +111,15 @@ services:
     networks:
       - www-network
 
+  captions_please:
+    build:
+      context: ./captions_please
+    restart: always
+    env_file:
+      - ./secrets/captions_please.env
+    networks:
+      - www-network
+
 networks:
   www-network:
     driver: bridge
