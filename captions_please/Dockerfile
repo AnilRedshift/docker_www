@@ -10,7 +10,7 @@ RUN go mod download
 WORKDIR /captions_please_go/cmd/captions_please
 RUN go build .
 
-FROM alpine:3.13
+FROM alpine:3.14
 COPY --from=builder /captions_please_go/cmd/captions_please/captions_please /captions_please
 RUN chmod +x /captions_please
 

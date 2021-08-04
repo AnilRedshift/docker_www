@@ -13,7 +13,7 @@ WORKDIR /fsg
 RUN npm install
 RUN npm run prod
 
-FROM nginx:1.19-alpine
+FROM nginx:1.21-alpine
 COPY --from=builder /fsg/dist /usr/share/nginx/html
 
 EXPOSE 80
