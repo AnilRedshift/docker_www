@@ -75,6 +75,7 @@ class Meow_MWL_Rest
 			'mwl_caption_origin' => get_option( 'mwl_caption_origin', 'caption' ),
 			'mwl_magnification' => get_option( 'mwl_magnification', true ),
 			'mwl_right_click' => get_option( 'mwl_right_click', false ),
+			'mwl_social_sharing' => get_option( 'mwl_social_sharing', false ),
 			'mwl_output_buffering' => get_option( 'mwl_output_buffering', true ),
 			'mwl_parsing_engine' => get_option( 'mwl_parsing_engine', 'HtmlDomParser' ),
 			'mwl_selector' => get_option( 'mwl_selector', '.entry-content, .gallery, .mgl-gallery, .wp-block-gallery' ),

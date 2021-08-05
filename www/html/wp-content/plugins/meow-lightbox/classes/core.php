@@ -95,6 +95,7 @@ class Meow_MWL_Core {
 					'orientation' => get_option( 'mwl_orientation', 'auto' ),
 					'selector' => get_option( 'mwl_selector', '.entry-content, .gallery, .mgl-gallery, .wp-block-gallery' ),
 					'deep_linking' => get_option( 'mwl_deep_linking', false ),
+					'social_sharing' => get_option( 'mwl_social_sharing', false ),
 					'low_res_placeholder' => get_option( 'mwl_low_res_placeholder', false ),
 					'right_click_protection' => !get_option( 'mwl_right_click', false ),
 					'magnification' => get_option( 'mwl_magnification', true ),

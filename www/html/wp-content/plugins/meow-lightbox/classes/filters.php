@@ -34,8 +34,13 @@ class Meow_MWL_Filters {
 			"EF-S17-55mm f/2.8 IS USM" => "17-55mm f/2.8",
 			"EF11-24mm f/4L USM" => "11-24mm f/4",
 			"EF24-70mm f/2.8L II USM" => "24-70mm f/2.8",
-			// Rolleiflex
-			"XCD 45" => "XCD 45mm"
+			// Hasselblad
+			"XCD 21" => "XCD 21mm",
+			"XCD 45" => "XCD 45mm",
+			"XCD 80" => "XCD 80mm",
+			// Fujifilm
+			"GF110mmF2 R LM WR" => "GF 110mm f/2",
+			"GF23mmF4 R LM WR" => "GF 23mm f/4",
 		);
 		if ( isset( $lenses[$lens] ) )
 			return $lenses[$lens];
@@ -51,21 +56,19 @@ class Meow_MWL_Filters {
 			"ILCE-6000" => "SONY α6000",
 			"ILCE-7RM2" => "SONY α7R II",
 			"ILCE-7RM3" => "SONY α7R III",
-			"X1D II 50C" => "Rolleiflex X1D II",
+			"X1D II 50C" => "Hasselblad X1D II",
 			"GA645Zi" => "Fujifilm GA645Zi",
 			"045F-2" => "Chamonix 045F-2",
 			"MK3" => "Intrepid MK3",
 			"X-T2" => "FUJIFILM X-T2",
 			"Canon EOS 5D Mark IV" => "Canon 5D Mark IV",
-			"GA645Zi" => "Fujifilm GA645Zi",
-			"045F-2" => "Chamonix 045F-2",
-			"MK3" => "Intrepid MK3",
 			"XG-1" => "Minolta XG-1",
 			"OM10" => "Olympus OM10",
 			"F50" => "Nikon F50",
 			"V-Lux 20" => "Leica V-Lux 20",
 			"Optio E70L" => "Pentax Optio E70L",
 			"E990" => "Nikon E990",
+			"GFX100S" => "Fujifilm GFX 100S"
 		);
 		if ( isset( $cameras[$camera] ) )
 			return $cameras[$camera];
