@@ -15,5 +15,5 @@ setenv() {
 setenv
 docker-compose pull
 docker-compose build
-docker system prune -f
 systemctl restart docker-compose-www
+docker system prune -f
