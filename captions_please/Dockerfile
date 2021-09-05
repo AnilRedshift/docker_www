@@ -4,7 +4,7 @@ RUN set -ex && \
   apk add --no-cache \
   git
 
-RUN git clone --branch 'v0.7' --single-branch https://github.com/AnilRedshift/captions_please_go /captions_please_go
+RUN git clone --branch 'v0.8' --single-branch https://github.com/AnilRedshift/captions_please_go /captions_please_go
 WORKDIR /captions_please_go/
 RUN go mod download
 WORKDIR /captions_please_go/cmd/captions_please
