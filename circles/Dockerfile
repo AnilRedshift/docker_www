@@ -1,9 +1,9 @@
-FROM node:14-alpine as builder
+FROM node:17-alpine as builder
 
 RUN set -ex && \
   apk update && \
   apk add --no-cache \
-  python2 \
+  python3 \
   make \
   g++ \
   git

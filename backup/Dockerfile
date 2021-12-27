@@ -1,6 +1,5 @@
-FROM alpine:3.14
-RUN apk update
-RUN apk add --no-cache restic
+FROM alpine:3.15
+RUN apk --update add --no-cache restic
 
 RUN mkdir -p /root/periodic
 ADD ./backup.sh /root/periodic/backup.sh

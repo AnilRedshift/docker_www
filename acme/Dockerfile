@@ -1,9 +1,7 @@
-FROM alpine:3.14
-RUN apk update
+FROM alpine:3.15
 ARG LETS_ENCRYPT_EMAIL
 ENV LETS_ENCRYPT_EMAIL $LETS_ENCRYPT_EMAIL
-RUN apk update
-RUN apk add --no-cache openssl openssh socat curl
+RUN apk --update add --no-cache openssl openssh socat curl
 
 # Install acme.sh
 RUN wget -O -  https://get.acme.sh | sh -s email=${LETS_ENCRYPT_EMAIL}
