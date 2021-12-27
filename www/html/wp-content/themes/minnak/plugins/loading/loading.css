@@ -58,7 +58,8 @@ hide our loading layer
 */
 #page-overlay.loaded,
 #page-overlay>span {
-    opacity: 0
+    opacity: 0;
+    visibility: hidden
 }
 /*
 create the animated spinner

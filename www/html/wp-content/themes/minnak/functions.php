@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'MINNAK_VERSION' ) ) {
-	define( 'MINNAK_VERSION', '2.1.5' );
+	define( 'MINNAK_VERSION', '2.1.9' );
 }
 
 function minnak_loading_inline_style() {
@@ -245,12 +245,13 @@ add_filter( 'get_archives_link', 'minnak_styling_archive_counts' );
 
 
 function minnak_dark_mode( $classes ) {
-	if ( ( get_theme_mod( 'theme_mode', 'dark' ) === 'dark' ) ) { 
-    $classes[] = 'dark-theme';
+	if ( ( get_theme_mod( 'theme_mode', 'light' ) === 'light' ) ) { 
+    	$classes[] = '';
 		return $classes;    
 	}
-	else{
-		return $classes;
+	if ( ( get_theme_mod( 'theme_mode', 'dark' ) === 'dark' ) ) { 
+    	$classes[] = 'dark-theme';
+		return $classes;    
 	}
 }
 add_filter( 'body_class','minnak_dark_mode' );

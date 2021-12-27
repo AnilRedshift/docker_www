@@ -7,7 +7,7 @@ Description: MiNNaK is a clean, minimal and easy to use WordPress blog and portf
 Requires at least: 4.5
 Tested up to: 5.6
 Requires PHP: 5.6
-Version: 2.1.5
+Version: 2.1.9
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: minnak
@@ -910,6 +910,7 @@ span.post_count {
 .no-results h1,
 .error404 h1{
 	margin-top: 0;
+	margin-bottom: 1em;
 	text-align: left;
 	font-weight: bold;
 }
