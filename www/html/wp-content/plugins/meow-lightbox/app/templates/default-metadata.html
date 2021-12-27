@@ -1,0 +1,30 @@
+{{@if(it.image.exifs.title && it.settings.infos_to_display.title)}}
+<h2>
+  {{it.image.exifs.title | safe}}
+</h2>
+{{/if}}
+
+{{@if(it.settings.infos_to_display.caption && it.image.caption)}}
+
+{{@if(it.image.caption.length > 150)}}
+<p class="short-description visible">
+  {{it.image.caption.substr(0, 150) | safe }}...
+  <span class="toggle-full-description">{{it.Icons.plus | safe}}</span>
+</p>
+{{/if}}
+<p class="full-description {{it.image.caption.length > 150 ? '' : 'visible'}}">
+  {{it.image.caption | safe}}
+  {{@if(it.image.caption.length > 150)}}
+  <span class="toggle-full-description">{{it.Icons.minus | safe}}</span>
+  {{/if}}
+</p>
+
+{{/if}}
+
+<div class="exifs">
+  {{@each(it.exifs) => exif, index}}
+  {{@if(exif.visible)}}
+  <div class="exif">{{exif.icon | safe}}<span> &nbsp;{{exif.value}}</span></div>
+  {{/if}}
+  {{/each}}
+</div>

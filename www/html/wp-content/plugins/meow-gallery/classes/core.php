@@ -22,6 +22,14 @@ class Meow_MGL_Core {
 		}
 	}
 
+	public function can_access_settings() {
+		return apply_filters( 'mgl_allow_setup', current_user_can( 'manage_options' ) );
+	}
+
+	public function can_access_features() {
+		return apply_filters( 'mgl_allow_usage', current_user_can( 'upload_files' ) );
+	}
+
 	// Use by the Gutenberg block
 
 	// Rewrite the sizes attributes of the src-set for each image

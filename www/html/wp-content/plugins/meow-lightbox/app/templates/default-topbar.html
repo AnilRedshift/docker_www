@@ -1,0 +1,45 @@
+<div class="mwl__topbar__slide-counter">
+  <span class="current-slide">
+    {{it.data.currentIndex}}
+  </span>
+  /
+  <span class="number-of-slides">
+    {{it.data.numberOfImages}}
+  </span>
+</div>
+<div class="mwl__topbar__controls">
+  {{@each(it.controls) => control, index}}
+  {{@if(control.enabled)}}
+  <div
+    class="mwl__topbar__controls__control mwl__topbar__controls__control--{{control.slug}} {{control.hidden ? 'hidden' : ''}}">
+    {{control.icon | safe}}
+
+    {{@if(control.slug === 'sharing' && it.data.currentUrl)}}
+    <div class="mwl__topbar__controls__control--sharing__options">
+      <li>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{it.data.currentUrl}}" target="_blank">
+          Share on Facebook
+        </a>
+      </li>
+      <li>
+        <a href="https://twitter.com/intent/tweet?text={{it.data.currentUrl}}" target="_blank">
+          Share on Twitter
+        </a>
+      </li>
+      <li>
+        <a href="https://pinterest.com/pin/create/button/?url={{it.data.currentUrl}}" target="_blank">Share on
+          Pinterest
+        </a>
+      </li>
+    </div>
+    {{/if}}
+
+    {{@if(control.label)}}
+    <div class="mwl__topbar__controls__control__label">
+      {{control.label}}
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+  {{/each}}
+</div>

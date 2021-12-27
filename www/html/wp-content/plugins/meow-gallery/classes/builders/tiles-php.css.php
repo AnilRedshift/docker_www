@@ -1,24 +1,24 @@
 <style>
 
 	.mgl-tiles {
-		display: <?= ($isPreview ? 'block' : 'none') ?>;
+		display: <?php echo ($isPreview ? 'block' : 'none') ?>;
 	}
 
-	<?= $class_id ?> {
-		margin: <?= -1 * ( $gutter / 2 ) ?>px;
-		width: calc(100% + <?= $gutter ?>px);
+	<?php echo esc_attr( $class_id ) ?> {
+		margin: <?php echo -1 * ( (int)$gutter / 2 ) ?>px;
+		width: calc(100% + <?php echo (int)$gutter ?>px);
 	}
 
-	<?= $class_id ?> .mgl-box {
-		padding: <?= $gutter / 2 ?>px;
+	<?php echo esc_attr( $class_id ) ?> .mgl-box {
+		padding: <?php echo (int)$gutter / 2 ?>px;
 	}
 
 	@media screen and (max-width: 600px) {
-		<?= $class_id ?> .mgl-row {
+		<?php echo esc_attr( $class_id ) ?> .mgl-row {
 			height: 100px;
 		}
 
-		<?= $class_id ?> figcaption {
+		<?php echo esc_attr( $class_id ) ?> figcaption {
 			display: none;
 		}
 	}

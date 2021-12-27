@@ -24,6 +24,9 @@ rm -Rf $PWD/app/galleries
 rm -Rf $PWD/app/less
 rm -Rf $PWD/common/js
 
+# Delete common only-PRO files
+rm -Rf $PWD/common/premium
+
 # Copy main files
 
 rm $plugin.php

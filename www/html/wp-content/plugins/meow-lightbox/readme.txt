@@ -2,15 +2,15 @@
 Contributors: TigrouMeow, kywyz
 Tags: lightbox, responsive, exif, media, gps, map, photography, photo, gutenberg, image, images, gallery, retina
 Requires at least: 5.0
-Tested up to: 5.7.2
+Tested up to: 5.8.1
 Requires PHP: 7.0
-Stable tag: 3.0.9
+Stable tag: 3.1.5
 
-This is a responsive minimal Lightbox built for photographers, which displays EXIF information. This lightbox is highly optimized and designed to be fast and beautiful.
+Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it!
 
 == Description ==
 
-This is a responsive minimal Lightbox built for photographers, which displays EXIF information. This lightbox is highly optimized and designed to be fast and beautiful. Learn more about it here: [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
+Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it! Learn more about it here: [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
 
 === KEY FEATURES ===
 
@@ -54,6 +54,26 @@ Replace all the files. Nothing else to do.
 Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
 
 == Changelog ==
+
+= 3.1.5 (2021/09/22) =
+* Fix: Low-res could be larger than high-res.
+* Fix: Issue with download.
+* Update: Common lib 3.6.
+
+= 3.1.4 (2021/09/21) =
+* Fix: Issue with low res first not sized correctly.
+* Add: A metabox that displays the GPS info (useful for debugging it).
+
+= 3.1.3 (2021/09/18) =
+* Fix: Catch error when no srcset or sizes.
+* Fix: Don't escape HTML in title/caption.
+
+= 3.1.2 (2021/09/11) =
+* Fix: Refresh metadata when media updated through ajax.
+* Update: New and lighter architecture.
+
+= 3.1.1 (2021/09/01) =
+* Fix: Enhanced security.
 
 = 3.0.9 (2021/07/08) =
 * Add: Option for social sharing.

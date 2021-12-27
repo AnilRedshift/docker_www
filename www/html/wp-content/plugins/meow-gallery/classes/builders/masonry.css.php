@@ -1,30 +1,30 @@
 <style>
 
 	.mgl-masonry {
-		display: <?= ($isPreview ? 'block' : 'none') ?>;
+		display: <?php echo ($isPreview ? 'block' : 'none') ?>;
 	}
 
-	<?= $class_id ?> {
-		column-count: <?= $columns ?>;
-		margin: <?= -1 * ( $gutter / 2 ) ?>px;
+	<?php echo esc_attr( $class_id ) ?> {
+		column-count: <?php echo (int)$columns ?>;
+		margin: <?php echo -1 * ( (int)$gutter / 2 ) ?>px;
 	}
 
-	<?= $class_id ?> .mgl-item {
-		padding: <?= $gutter / 2 ?>px;
+	<?php echo esc_attr( $class_id ) ?> .mgl-item {
+		padding: <?php echo (int)$gutter / 2 ?>px;
 	}
 
-	<?= $class_id ?> figcaption {
-		padding: <?= $gutter / 2 ?>px;
+	<?php echo esc_attr( $class_id ) ?> figcaption {
+		padding: <?php echo (int)$gutter / 2 ?>px;
 	}
 
 	@media screen and (max-width: 800px) {
-		<?= $class_id ?> {
+		<?php echo esc_attr( $class_id ) ?> {
 			column-count: 2;
 		}
 	}
 
 	@media screen and (max-width: 600px) {
-		<?= $class_id ?> {
+		<?php echo esc_attr( $class_id ) ?> {
 			column-count: 1;
 		}
 	}

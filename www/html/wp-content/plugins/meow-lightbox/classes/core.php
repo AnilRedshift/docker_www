@@ -26,6 +26,9 @@ class Meow_MWL_Core {
 			new MeowPro_MWL_Core( $this );
 		}
 
+		//$this->parsingEngine = 'HtmlDomParser';
+		add_action( 'edit_attachment', array( $this, 'edit_attachment' ), 10, 1 );
+
 		// The Lightbox should be completely off if the request is asynchronous
 		$recent_common = method_exists( 'MeowCommon_Helpers', 'is_pagebuilder_request' );
 		if ( MeowCommon_Helpers::is_asynchronous_request() || ( $recent_common && MeowCommon_Helpers::is_pagebuilder_request() ) ) {
@@ -39,12 +42,9 @@ class Meow_MWL_Core {
 		$this->parsingEngine = get_option( 'mwl_parsing_engine', $this->parsingEngine );
 		$this->renderingMode = $this->isObMode ? 'rewrite' : get_option( 'mwl_rendering_mode', $this->renderingMode );
 
-		//$this->parsingEngine = 'HtmlDomParser';
-
 		// Admin
 		if ( is_admin() ) {
 			load_plugin_textdomain( MWL_DOMAIN, false, MWL_PATH . '/languages' );
-			add_action( 'edit_attachment', array( $this, 'edit_attachment' ), 10, 1 );
 			new Meow_MWL_Admin();
 		}
 		// Client
@@ -69,6 +69,14 @@ class Meow_MWL_Core {
 				$this->renderingMode = 'rewrite';
 			}
 		}
+	}
+
+	public function can_access_settings() {
+		return apply_filters( 'mwl_allow_setup', current_user_can( 'manage_options' ) );
+	}
+
+	public function can_access_features() {
+		return apply_filters( 'mwl_allow_usage', current_user_can( 'upload_files' ) );
 	}
 
 	function enqueue_scripts() {
@@ -99,7 +107,7 @@ class Meow_MWL_Core {
 					'low_res_placeholder' => get_option( 'mwl_low_res_placeholder', false ),
 					'right_click_protection' => !get_option( 'mwl_right_click', false ),
 					'magnification' => get_option( 'mwl_magnification', true ),
-					'anti_selector' => get_option( 'mwl_anti_selector', '.blog, .archive, .emoji, .attachment-post-image' ),
+					'anti_selector' => get_option( 'mwl_anti_selector', '.blog, .archive, .emoji, .attachment-post-image, .no-lightbox' ),
 					'preloading' => get_option( 'mwl_preloading', false ),
 					'download_link' => get_option( 'mwl_download_link', false ),
 					'caption_source' => get_option( 'mwl_caption_origin', 'caption' ),

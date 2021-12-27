@@ -5,8 +5,8 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 	class MeowCommon_Admin {
 
 		public static $loaded = false;
-		public static $version = "3.3";
-		public static $admin_version = "3.3";
+		public static $version = "3.6";
+		public static $admin_version = "3.6";
 
 		public $prefix; 		// prefix used for actions, filters (mfrh)
 		public $mainfile; 	// plugin main file (media-file-renamer.php)
@@ -15,13 +15,13 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 
 		public static $logo = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB2aWV3Qm94PSIwIDAgMTY1IDE2NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8c3R5bGU+CiAgICAuc3Qye2ZpbGw6IzgwNDYyNX0uc3Qze2ZpbGw6I2ZkYTk2MH0KICA8L3N0eWxlPgogIDxwYXRoIGQ9Ik03MiA3YTc2IDc2IDAgMCAxIDg0IDkxQTc1IDc1IDAgMSAxIDcyIDd6IiBmaWxsPSIjNGE2YjhjIi8+CiAgPHBhdGggZD0iTTQ4IDQ4YzIgNSAyIDEwIDUgMTQgNSA4IDEzIDE3IDIyIDIwbDEtMTBjMS0yIDMtMyA1LTNoMTNjMiAwIDQgMSA1IDNsMyA5IDQtMTBjMi0zIDYtMiA5LTJoMTFjMyAyIDMgNSAzIDhsMiAzN2MwIDMtMSA3LTQgOGgtMTJjLTIgMC0zLTItNS00LTEgMS0yIDMtNCAzLTUgMS05IDEtMTMtMS0zIDItNSAyLTkgMnMtOSAxLTEwLTNjLTItNC0xLTggMC0xMi04LTMtMTUtNy0yMi0xMi03LTctMTUtMTQtMjAtMjMtMy00LTUtOC01LTEzIDEtNCAzLTEwIDYtMTMgNC0zIDEyLTIgMTUgMnoiIGZpbGw9IiMxMDEwMTAiLz4KICA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNNDMgNTFsNCAxMS02IDVoLTZjLTMtNS0zLTExIDAtMTYgMi0yIDYtMyA4IDB6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTQ3IDYybDMgNmMwIDMgMCA0LTIgNnMtNCAyLTcgMmwtNi05aDZsNi01eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik01MCA2OGw4IDljLTMgMy01IDYtOSA4bC04LTljMyAwIDUgMCA3LTJzMy0zIDItNnoiLz4KICA8cGF0aCBkPSJNODIgNzRoMTJsNSAxOCAzIDExIDgtMjloMTNsMiA0MmgtOGwtMS0yLTEtMzEtMTAgMzItNyAxLTktMzMtMSAyOS0xIDRoLThsMy00MnoiIGZpbGw9IiNmZmYiLz4KICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNNTggNzdsNSA1Yy0xIDQtMiA4LTcgOGwtNy01YzQtMiA2LTUgOS04eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02MyA4Mmw5IDUtNiA5LTEwLTZjNSAwIDYtNCA3LTh6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTcyIDg3bDMgMS0xIDExLTgtMyA2LTEweiIvPgo8L3N2Zz4K';
 
-		public function __construct( $prefix, $mainfile, $domain, $isPro = false, $disableReview = false ) {
+		public function __construct( $prefix, $mainfile, $domain, $isPro = false, $disableReview = false, $freeOnly = false ) {
 
 			if ( !MeowCommon_Admin::$loaded ) {
 				if ( is_admin() ) {
 
 					// Check potential issues with this WordPress install, other plugins, etc.
-					new MeowCommon_Classes_Issues( $prefix, $mainfile, $domain );
+					new MeowCommon_Issues( $prefix, $mainfile, $domain );
 
 					// Create the Meow Apps Menu
 					add_action( 'admin_menu', array( $this, 'admin_menu_start' ) );
@@ -45,7 +45,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
           add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
         }
         if ( !$disableReview ) {
-          new MeowCommon_Classes_Ratings( $prefix, $mainfile, $domain );
+          new MeowCommon_Ratings( $prefix, $mainfile, $domain );
         }
 			}
 			add_filter( 'plugin_row_meta', array( $this, 'custom_plugin_row_meta' ), 10, 2 );
@@ -98,19 +98,19 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 				delete_option( $this->prefix . '_license' );
 				return;
 			}
-			echo '<div class="notice notice-error">';
-			printf(
+			$html = '<div class="notice notice-error">';
+			$html .= sprintf(
 				__( '<p>It looks like you are using the free version of the plugin (<b>%s</b>) but a license for the Pro version was also found. The Pro version might have been replaced by the Free version during an update (might be caused by a temporarily issue). If it is the case, <b>please download it again</b> from the <a target="_blank" href="https://store.meowapps.com">Meow Store</a>. If you wish to continue using the free version and clear this message, click on this button.', $this->domain ),
 				$this->nice_name_from_file( $this->mainfile ) );
-			echo '<p>
+				$html .= '<p>
 				<form method="post" action="">
 					<input type="hidden" name="' . $this->prefix . '_reset_sub" value="true">
 					<input type="submit" name="submit" id="submit" class="button" value="'
 					. __( 'Remove the license', $this->domain ) . '">
 				</form>
-			</p>
-			';
-			echo '</div>';
+			</p>';
+			$html .= '</div>';
+			wp_kses_post( $html );
 		}
 
 		function admin_menu_start() {
@@ -136,7 +136,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 			$html = '<input type="checkbox" id="meowapps_hide_meowapps" name="meowapps_hide_meowapps" value="1" ' .
 				checked( 1, get_option( 'meowapps_hide_meowapps' ), false ) . '/>';
 			$html .= __( '<label>Hide <b>Meow Apps</b> Menu</label><br /><small>Hide Meow Apps menu and all its components, for a cleaner admin. This option will be reset if a new Meow Apps plugin is installed. <b>Once activated, an option will be added in your General settings to display it again.</b></small>', $this->domain );
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 
 		function is_registered() {
@@ -144,20 +144,25 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 		}
 
 		function get_phpinfo() {
+			if ( !current_user_can( 'administrator' ) ) {
+				return;
+			}
 			ob_start();
+			// phpcs:disable WordPress.PHP.DevelopmentFunctions
 			phpinfo( INFO_GENERAL | INFO_CONFIGURATION | INFO_MODULES );
+			// phpcs:enable
 			$html = ob_get_contents();
 			ob_end_clean();
 			$html = preg_replace( '%^.*<body>(.*)</body>.*$%ms','$1', $html );
-			echo $html;
+			return $html;
 		}
-
+		
 		function admin_meow_apps() {
-			echo "<div id='meow-common-dashboard'></div>";
-
-			echo "<div style='display: none;' id='meow-common-phpinfo'>";
-			echo $this->get_phpinfo();
-			echo "</div>";
+			$html = "<div id='meow-common-dashboard'></div>";
+			$html .= "<div style='height: 0; width: 0; overflow: hidden;' id='meow-common-phpinfo'>";
+			$html .=  $this->get_phpinfo();
+			$html .=  "</div>";
+			echo wp_kses_post( $html );
 		}
 
 		function admin_footer_text( $current ) {
@@ -170,5 +175,3 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 		}
 	}
 }
-
-?>

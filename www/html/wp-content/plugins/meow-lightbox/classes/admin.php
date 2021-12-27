@@ -9,6 +9,10 @@ class Meow_MWL_Admin extends MeowCommon_Admin {
 			add_action( 'admin_menu', array( $this, 'app_menu' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 
+			if ( get_option( 'mwl_map', false ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+			}
+
 			// Only loads the Lightbox Admin if we are on the Meow Dashboard or the Lightbox Settings
 			// I didn't want to do this, but unfortunately the JS breaks Rank Math SEO...
 			$isJsNeeded = isset( $_GET['page'] ) && ( $_GET['page'] === 'meowapps-main-menu' || $_GET['page'] === 'mwl_settings' );
@@ -26,10 +30,29 @@ class Meow_MWL_Admin extends MeowCommon_Admin {
 				update_option( 'mwl_googlemaps_style', $mwl_map_style );
 				delete_option( 'mwl_map_style' );
 			}
-			$mwl_selector = get_option( 'mwl_selector', '.entry-content, .gallery, .mwl-gallery, .wp-block-gallery' );
+			$mwl_selector = get_option( 'mwl_selector', '.entry-content, .gallery, .mgl-gallery, .wp-block-gallery' );
 			if ( empty( $mwl_selector ) ) {
-				update_option( 'mwl_selector', '.entry-content, .gallery, .mwl-gallery, .wp-block-gallery' );
+				update_option( 'mwl_selector', '.entry-content, .gallery, .mgl-gallery, .wp-block-gallery' );
 			}
+		}
+	}
+
+	function add_meta_boxes() {
+		add_meta_box( 'meta-meow-gps', 'Meow GPS', array( $this, 'metabox_meow_gps' ), 
+			'attachment', 'side', 'low' );
+	}
+
+	function metabox_meow_gps( $post ) {
+		$meta = wp_get_attachment_metadata( $post->ID );
+		if ( !isset( $meta['image_meta']['geo_coordinates'] ) ) {
+			Meow_MWL_Exif::get_gps_data( $post->ID, $meta );
+		}
+		$gps = apply_filters( 'mwl_img_gps', $meta['image_meta']['geo_coordinates'],	$post->ID, $meta );
+		if ( empty( $gps ) ) {
+			echo esc_attr( "No coordinates." );
+		}
+		else {
+			echo esc_attr( "Coordinates: $gps" );
 		}
 	}
 

@@ -1,0 +1,32 @@
+<div class="mwl__topbar">
+</div>
+
+<div class="mwl__navigation__previous">
+  {{ it.Icons.arrow_left | safe }}
+</div>
+<div class="mwl__navigation__next">
+  {{ it.Icons.arrow_right | safe }}
+</div>
+
+<div class="mwl__slider">
+  {{@each(it.images) => image, index}}
+  <div class="mwl__slider__image" data-index="{{index}}">
+    <div class="mwl__slider__image__thumbnail">
+
+      <div class="mwl__slider__image__thumbnail__low-res-container">
+        {{@if(image.low_res_src)}}
+        <img class="mwl__slider__image__thumbnail__low-res" data-src="{{image.low_res_src}}">
+        {{#else}}
+        <img class="mwl__slider__image__thumbnail__low-res" data-src="">
+        {{/if}}
+      </div>
+      <img class="mwl__slider__image__thumbnail__high-res {{image.orientation}}" data-src="{{image.src}}" {{
+        @if(image.srcset && image.sizes) }} data-srcset="{{image.srcset}}" data-sizes="{{image.sizes}}" {{ /if }}>
+      <div id="image-map-{{index}}" class="image-map"></div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<div class="mwl__metadata">
+</div>
