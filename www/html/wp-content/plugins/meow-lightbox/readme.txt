@@ -2,9 +2,9 @@
 Contributors: TigrouMeow, kywyz
 Tags: lightbox, responsive, exif, media, gps, map, photography, photo, gutenberg, image, images, gallery, retina
 Requires at least: 5.0
-Tested up to: 5.8.1
+Tested up to: 5.9.3
 Requires PHP: 7.0
-Stable tag: 3.1.5
+Stable tag: 3.2.1
 
 Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it!
 
@@ -54,6 +54,26 @@ Replace all the files. Nothing else to do.
 Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
 
 == Changelog ==
+
+= 3.2.1 (2022/04/21) =
+* Add: jQuery is not required anymore.
+* Fix: There were some random issues.
+* Info: We absolutely need your help and motivation. You can do it by writing a review [here]( https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post). Thanks a lot :)
+
+= 3.1.9 (2022/04/14) =
+* Add: Option for Output Buffering. That will avoid issues for some users.
+
+= 3.1.8 (2022/04/07) =
+* Fix: No more scrolling of the site with the Lightbox is displayed.
+* Fix: There was some issue with the JS and CSS only used when actively used.
+
+= 3.1.7 (2022/02/23) =
+* Update: Only load the JS and CSS when the Lightbox is actively used.
+* Add: Support for 'mwl-img-disabled' class.
+
+= 3.1.6 (2022/02/20) =
+* Add: Zoom level for map.
+* Fix: Title was overriden by themes too easily.
 
 = 3.1.5 (2021/09/22) =
 * Fix: Low-res could be larger than high-res.
@@ -113,7 +133,6 @@ Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/
 
 = 2.0.5 =
 * Fix: Issue in the map when lazyloading was used in the gallery.
-* Info: We absolutely need your help and motivation. You can do it by writing a review [here]( https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post). Thanks a lot :)
 
 = 2.0.4 =
 * Add: Option to load a low-res first, to make sure the image appears instantly.
@@ -128,7 +147,6 @@ Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/
 * Fix: Byebye to the naturalWidth issue.
 * Fix: Hide map icon if... it's disabled.
 * Add: Display focal length and capture date.
-* Info: We absolutely need your help and motivation. You can do it by writing a review [here]( https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post). Thanks a lot :)
 
 = 1.7.9 =
 * Fix: There was a little notice in the Error Logs for old versions of PHP.

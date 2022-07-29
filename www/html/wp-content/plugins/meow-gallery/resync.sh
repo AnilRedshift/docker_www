@@ -13,7 +13,7 @@ echo "Link with Meow Gallery Pro."
 dirs=(app classes common languages)
 for x ($dirs); do
   rm -Rf $x
-  /usr/local/opt/coreutils/bin/gcp -Rl $PWD/../$plugin-pro/$x .
+  /opt/homebrew/opt/coreutils/bin/gcp -Rl $PWD/../$plugin-pro/$x .
 done
 
 # Delete useless files

@@ -5,8 +5,8 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 	class MeowCommon_Admin {
 
 		public static $loaded = false;
-		public static $version = "3.6";
-		public static $admin_version = "3.6";
+		public static $version = "3.7";
+		public static $admin_version = "3.7";
 
 		public $prefix; 		// prefix used for actions, filters (mfrh)
 		public $mainfile; 	// plugin main file (media-file-renamer.php)
@@ -25,7 +25,8 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 
 					// Create the Meow Apps Menu
 					add_action( 'admin_menu', array( $this, 'admin_menu_start' ) );
-					if ( isset( $_GET['page'] ) && $_GET['page'] === 'meowapps-main-menu' ) {
+					$page = isset( $_GET["page"] ) ? sanitize_text_field( $_GET["page"] ) : null;
+					if ( $page === 'meowapps-main-menu' ) {
 						add_filter( 'admin_footer_text',  array( $this, 'admin_footer_text' ), 100000, 1 );
 					}
 				}
@@ -69,7 +70,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 					'license' => 
 						$this->is_registered() ? 
 							('<span style="color: #a75bd6;">' . __( 'Pro Version', $this->domain ) . '</span>') : 
-								( $isIssue ? (sprintf( '<span style="color: #ff3434;">' . __( 'License Issue', $this->domain ), $this->prefix ) . '</span>') : (sprintf( '<span>' . __( '<a target="_blank" href="https://store.meowapps.com">Get the <u>Pro Version</u></a>', $this->domain ), $this->prefix ) . '</span>') ),
+								( $isIssue ? (sprintf( '<span style="color: #ff3434;">' . __( 'License Issue', $this->domain ), $this->prefix ) . '</span>') : (sprintf( '<span>' . __( '<a target="_blank" href="https://meowapps.com">Get the <u>Pro Version</u></a>', $this->domain ), $this->prefix ) . '</span>') ),
 				);
 				$links = array_merge( $new_links, $links );
 			}
@@ -100,7 +101,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 			}
 			$html = '<div class="notice notice-error">';
 			$html .= sprintf(
-				__( '<p>It looks like you are using the free version of the plugin (<b>%s</b>) but a license for the Pro version was also found. The Pro version might have been replaced by the Free version during an update (might be caused by a temporarily issue). If it is the case, <b>please download it again</b> from the <a target="_blank" href="https://store.meowapps.com">Meow Store</a>. If you wish to continue using the free version and clear this message, click on this button.', $this->domain ),
+				__( '<p>It looks like you are using the free version of the plugin (<b>%s</b>) but a license for the Pro version was also found. The Pro version might have been replaced by the Free version during an update (might be caused by a temporarily issue). If it is the case, <b>please download it again</b> from the <a target="_blank" href="https://meowapps.com">Meow Store</a>. If you wish to continue using the free version and clear this message, click on this button.', $this->domain ),
 				$this->nice_name_from_file( $this->mainfile ) );
 				$html .= '<p>
 				<form method="post" action="">
@@ -140,11 +141,12 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 		}
 
 		function is_registered() {
-			return apply_filters( $this->prefix . '_meowapps_is_registered', false, $this->prefix  );
+			$is_registered = apply_filters( $this->prefix . '_meowapps_is_registered', false, $this->prefix );
+			return $is_registered;
 		}
 
 		function get_phpinfo() {
-			if ( !current_user_can( 'administrator' ) ) {
+			if ( !current_user_can( 'administrator' ) || !function_exists( 'phpinfo' ) ) {
 				return;
 			}
 			ob_start();
@@ -162,6 +164,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 			$html .= "<div style='height: 0; width: 0; overflow: hidden;' id='meow-common-phpinfo'>";
 			$html .=  $this->get_phpinfo();
 			$html .=  "</div>";
+			$html = preg_replace("/<img[^>]+\>/i", "", $html); 
 			echo wp_kses_post( $html );
 		}
 

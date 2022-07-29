@@ -6,21 +6,21 @@ use DiDom\Document;
 use KubAT\PhpSimple\HtmlDomParser;
 
 class Meow_MWL_Core {
-
 	public $images = [];
-
 	public $isInfinite = false;
-	public $isObMode = true; // use OB on the whole page, or only go through the the_content ($renderingMode will be ignored)
+	public $isObMode = false; // use OB on the whole page, or only go through the the_content ($renderingMode will be ignored)
 	public $parsingEngine = 'HtmlDomParser'; // 'HtmlDomParser' (less prone to break badly formatted HTML) or 'DiDom' (faster)
 	public $renderingMode = 'rewrite'; // 'replace' within the HTML or 'rewrite' the DOM completely
 	public $imageSize = false;
 	public $disableCache = false;
+	private $isEnqueued = false;
 
 	public function __construct() {
-
 		if ( MeowCommon_Helpers::is_rest() ) {
 			new Meow_MWL_Rest( $this );
 		}
+
+		$this->isObMode = get_option( 'mwl_output_buffering', $this->isObMode );
 
 		if ( class_exists( 'MeowPro_MWL_Core' ) ) {
 			new MeowPro_MWL_Core( $this );
@@ -38,7 +38,6 @@ class Meow_MWL_Core {
 		$this->imageSize = get_option( 'mwl_image_size', 'srcset' );
 		$this->disableCache = get_option( 'mwl_disable_cache' );
 		$this->isInfinite = get_option( 'mgl_infinite', false );
-		$this->isObMode = get_option( 'mwl_obmode', $this->isObMode );
 		$this->parsingEngine = get_option( 'mwl_parsing_engine', $this->parsingEngine );
 		$this->renderingMode = $this->isObMode ? 'rewrite' : get_option( 'mwl_rendering_mode', $this->renderingMode );
 
@@ -50,23 +49,26 @@ class Meow_MWL_Core {
 		// Client
 		else if ( !MeowCommon_Helpers::is_rest() ) {
 			new Meow_MWL_Filters();
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			if ( !$this->isObMode ) {
-				// Standard Mode
-				
+			add_action( 'mwl_lightbox_added', array( $this, 'lightbox_added' ), 10, 1 );
+
+			// MODE: Output Buffering
+			if ( $this->isObMode ) {
+				// Read the whole page, and add the mwl_data in the head.
+				add_action( 'init', array( $this, 'start_ob' ) );
+				add_action( 'shutdown', array( $this, 'end_ob' ), 100 );
+				$this->renderingMode = 'rewrite';
+
+				// This doesn't work well with the conditional loading of the scripts, so we need to load it anyway.
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			}
+			// MODE: Standard (Responsive Images)
+			else {
 				// Try to take advantage of the Responsive Images feature of WP 4.4+ to make things faster.
 				add_filter( 'wp_get_attachment_image_attributes', array( $this, 'wp_get_attachment_image_attributes' ), 10, 2 );
 				
 				// Analyze only page/post content and write the data in the footer.
 				add_filter( 'the_content', array( $this, 'lightboxify' ), 20 );
 				add_action( 'wp_footer', array( $this, 'wp_footer' ), 100 );
-			}
-			else {
-				// OB Mode
-				// Read the whole page, and add the mwl_data in the head.
-				add_action( 'init', array( $this, 'start_ob' ) );
-				add_action( 'shutdown', array( $this, 'end_ob' ), 100 );
-				$this->renderingMode = 'rewrite';
 			}
 		}
 	}
@@ -77,6 +79,16 @@ class Meow_MWL_Core {
 
 	public function can_access_features() {
 		return apply_filters( 'mwl_allow_usage', current_user_can( 'upload_files' ) );
+	}
+
+	public function lightbox_added( $mediaId ) {
+		//error_log("DEBUG: LIGHTBOX_ADDED " . $mediaId );
+		if ( $this->isEnqueued ) {
+			return;
+		}
+		$this->isEnqueued = true;
+		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		$this->enqueue_scripts();
 	}
 
 	function enqueue_scripts() {
@@ -93,7 +105,7 @@ class Meow_MWL_Core {
 		// JS
 		$physical_file = MWL_PATH . '/app/lightbox.js';
     $cache_buster = file_exists( $physical_file ) ? filemtime( $physical_file ) : MWL_VERSION;
-    wp_enqueue_script( 'mwl-build-js', plugins_url( '/app/lightbox.js', __DIR__ ), array( 'jquery' ), $cache_buster, false );
+    wp_enqueue_script( 'mwl-build-js', plugins_url( '/app/lightbox.js', __DIR__ ), null, $cache_buster, false );
 
 		wp_localize_script( 'mwl-build-js', 'mwl',
 			array(
@@ -294,11 +306,13 @@ class Meow_MWL_Core {
 	// When we are lucky (within a gallery), we can do this nicely, no need of the ob
 	function wp_get_attachment_image_attributes( $attr, $attachment ) {
 		$id = $attachment->ID;
-		if( !strpos( $attr['class'], 'wp-image-' . $id ) )
+		if ( !strpos( $attr['class'], 'wp-image-' . $id ) ) {
 			$attr['class'] .= ' wp-image-' . $id;
+		}
 		if ( empty( $attr['data-mwl-img-id'] ) ) {
-			if ( !in_array( $id, $this->images ) )
+			if ( !in_array( $id, $this->images ) ) {
 				array_push( $this->images, $id );
+			}
 			$attr['data-mwl-img-id'] = $id;
 		}
 		return $attr;
@@ -352,8 +366,10 @@ class Meow_MWL_Core {
 			else {
 				$element->attr( 'data-mwl-img-id', $mediaId );
 			}
-			if ( !in_array( $mediaId, $this->images ) )
+			if ( !in_array( $mediaId, $this->images ) ) {
 				array_push( $this->images, $mediaId );
+			}
+			do_action( 'mwl_lightbox_added', $mediaId );
 			return $this->renderingMode === 'replace' ? str_replace( trim( $from, "</> "), trim( $element, "</> " ), $buffer ) : 1;
 		}
 		return $this->renderingMode === 'replace' ? false : $buffer;
@@ -410,22 +426,26 @@ class Meow_MWL_Core {
 			$html = $head . $body . $mwlData . $footer;
 		}
 
-		if ( $this->renderingMode === 'replace' )
+		if ( $this->renderingMode === 'replace' ) {
 			return $buffer;
+		}
 		return $hasChanges ? $html : $buffer;
 	}
 
 	function write_mwl_data( $returnOnly = false ) {
-		$images_info = [];
-		foreach ( $this->images as $image ) {
-			$images_info[$image] = $this->get_exif_info( $image );
+		if ( !empty( $this->images ) ) {
+			$images_info = [];
+			foreach ( $this->images as $image ) {
+				$images_info[$image] = $this->get_exif_info( $image );
+			}
+			$html = '<script type="application/javascript">' . PHP_EOL;
+			$html .= 'var mwl_data = ' . json_encode( $images_info ) . ';' . PHP_EOL;
+			$html .= '</script>' . PHP_EOL;
+			if ( $returnOnly ) {
+				return $html;
+			}
+			echo $html;
 		}
-		$html = '<script type="application/javascript">' . PHP_EOL;
-		$html .= 'var mwl_data = ' . json_encode( $images_info ) . ';' . PHP_EOL;
-		$html .= '</script>' . PHP_EOL;
-		if ( $returnOnly )
-			return $html;
-		echo $html;
 	}
 
 	function wp_footer() {

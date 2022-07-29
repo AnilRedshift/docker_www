@@ -83,6 +83,7 @@ class Meow_MWL_Rest
 			'mwl_mapbox_style' => $this->create_default_mapbox_style(),
 			'mwl_maptiler_token' => '',
 			'mwl_disable_cache' => '',
+			'mwl_map_zoom_level' => 12,
 		);
 	}
 

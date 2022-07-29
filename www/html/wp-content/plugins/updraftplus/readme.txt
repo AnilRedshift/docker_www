@@ -2,8 +2,8 @@
 Contributors: Backup with UpdraftPlus, DavidAnderson, DNutbourne, aporter, snightingale, bcrodua
 Tags: backup, restore, database backup, wordpress backup, cloud backup, s3, dropbox, google drive, onedrive, ftp, backups
 Requires at least: 3.2
-Tested up to: 5.9
-Stable tag: 1.22.4
+Tested up to: 6.0
+Stable tag: 1.22.14
 Author URI: https://updraftplus.com
 Donate link: https://david.dw-perspective.org.uk/donate
 License: GPLv3 or later
@@ -170,6 +170,100 @@ N.B. Paid versions of UpdraftPlus Backup / Restore have a version number which i
 
 
 
+= 1.22.14 - 07/Jul/2022 =
+
+* FIX: Selective table restore
+* FIX: Fix restore button JS issue when importing single site to multisite
+* TWEAK: Allow charset to be set during a WP_CLI restore
+* TWEAK: Use similar charset if one is not set and not supported during a WL_CLI restore
+* TWEAK: Add bulk process handler for UpdraftCentral's plugin and theme modules
+* TWEAK: Return previous plugin and theme states before installation or activation
+* TWEAK: Improve the Handlebars template of the Backblaze remote storage by taking PHP code out of it (Premium)
+* TWEAK: Improve the Handlebars template of the WebDAV remote storage by taking PHP code out of it (Premium)
+* TWEAK: Improve the Handlebars template of the SFTP/SCP remote storage by taking PHP code out of it (Premium)
+* TWEAK: Avoid using 'phpmailer_init' action when setting up sender name and sender email address, as some SMTP plugins override the 'wp_mail()' function and they don't bother to call the 'phpmailer_init' action
+* TWEAK: Prevent increments being added to backups from other sites
+
+= 1.22.13 - 25/May/2022 =
+
+* FEATURE: Added the ability to create a clone from WP-CLI (Premium)
+* TWEAK: Free version – Improve the Handlebars template of Azzure, OneDrive, WebDAV, SFTP/SCP, Blackblaze, and Google Cloud remote storage by taking PHP code out of them
+* TWEAK: Update notice class
+* TWEAK: Escape URL used in remote storage connection modal
+* TWEAK: A Label being incorrectly displayed when creating a clone
+* TWEAK: Update class-udrpc
+* TWEAK: Don't show database selective restore UI if no tables are found in the database scan
+* TWEAK: Allow drag-dropping of backup anywhere, not just on target area
+* TWEAK: Add "echo" to display the premium link properly in some templates
+* TWEAK: Update the posts class to support theme.json config file for theme styles and block settings
+* TWEAK: Extract from plugin's data rather than relying on its key when retrieving the plugin slug
+* TWEAK: Increase likelihood of using experimental upload-sooner feature from 1% to 5%
+
+= 1.22.12 - 29/Apr/2022 =
+
+* FEATURE: Added the ability to select which themes and plugins to Restore
+* FEATURE: Allow existing local backups to be sent to a remote site when migrating
+* TWEAK: Tweak to allow the Amazon S3 setup wizard to run if the internal S3 library is active
+* TWEAK: The WordPress sidebar menu overlaps the popover tour box
+* TWEAK: Attempt to upload a zip file after it's been created to save on storage space
+* TWEAK: Add MySQL maximum packet size to Advanced Tools -> Site Information
+* TWEAK: Only output the expected table rows when starting to process the table
+* TWEAK: Fix get_users parameter that has been deprecated on WP 5.9 in UpdraftCentral posts controller.
+* TWEAK: Do not call escapeshellarg() for SCP if we know it is unnecessary (prevents problems on hosts lacking the function for trivial use cases)
+* TWEAK: Detect change of run-time environment on first resumption and re-set previously detected resumption interval if likely to be helpful
+* TWEAK: Improve the FTP Handlebars template by taking PHP code out of it
+* TWEAK: Convert HTTP error codes to their meanings
+* TWEAK: Some plugins are loading their own incomplete mcrypt_* functions try and detect this and recover
+* TWEAK: Ensure the local backup file is cleaned up if an earlier failed remote storage upload later succeeds
+* TWEAK: Include plugin version when getting details from UpdraftPlus Vault to allow features that depend upon a sufficiently up-to-date version
+
+= 1.22.11 - 15/Mar/2022 =
+
+* FIX: Internal S3 library did not correctly construct canonical query string with v4 signatures if there were multiple parameters, leading to wrong signatures and failed authorisation
+* FIX: Fix a recent regression that caused DNS hostnames to not be preferred when using Amazon S3
+* TWEAK: Prevent deprecation notice on PHP 8.1 if opening a zero-size zip file
+* TWEAK: Introduce filter updraftplus_dropbox_fetch_curl_options for easier debugging/experimentation
+
+= 1.22.10 - 11/Mar/2022 =
+
+* FIX: Fix a regression in the 1.22.9 adjustment to the internal S3 library's evaluation of when to use a Host: header
+* FIX: Fix a long-standing issue whereby if S3-related credentials were being tested via the front-end UI, and multiple back-end instances were present, then the wrong settings could be used in making decisions on Host: headers
+
+= 1.22.9 - 10/Mar/2022 =
+
+* SECURITY: Fixed a failure to sanitise printed URLs properly, leading to a targetted XSS opportunity (if an attacker persuades a logged-in admin to follow a link personally crafted for their site, he may be able to run JavaScript inside the browser - but on our testing, this ability is limited due to the sanitisation that was there - we have not been able to confirm that a payload causing damage is possible). Reported by Taurus Omar - https://taurusomar.com.
+* TWEAK: Adjust internal S3 library's evaluation of when to use a Host: header (improves compatibility with buckets with minimal access rules)
+* TWEAK: Adjust algorithm concerning likelihood of switching S3 libraries to accelerate deployment
+* TWEAK: Prevent PHP notice when using S3 with particular bucket naming and SSL
+
+= 1.22.8 - 03/Mar/2022 =
+
+* FIX: Do not attempt to use S3 DNS-style bucket naming in alternative library if SSL validation will fail due to AWS certificate wildcard policies or other bucket naming-related reasons
+* TWEAK: Add version number to alternative S3 library requests
+
+= 1.22.7 - 01/Mar/2022 =
+
+* FIX: Internal S3 library was missing a method for using session tokens together with Vault
+* FIX: Various UI issues with the S3 IAM Wizard
+* TWEAK: Use AWS SDK/Guzzle for S3 operations if Curl is not available
+* TWEAK: Prevent coding deprecation notice during S3 upload on PHP 8.1
+
+= 1.22.6 - 26/Feb/2022 =
+
+* FIX: Internal S3 library had regressed in its ability to detect bucket location on AWS when using v4 signatures
+* TWEAK: When using S3 APIs, log the class used for easier debugging
+* TWEAK: Change S3 SDK selection algorithm
+
+= 1.22.5 - 24/Feb/2022 =
+
+* FIX: An issue that prevented being able to browse the contents of an already downloaded backup zip file
+* FIX: Add previously unbundled AWS SDK file for IAM service description which prevented S3 wizard in the Premium version working correctly
+* FIX: Prevent a fatal error when handling some S3 errors, caused by a format change
+* TWEAK: When loading AWS SDK at upload time, apply some work-arounds for plugins with buggy or old versions of related libraries
+* TWEAK: Update to latest AWS SDK toolkit, fixing an error with error-reporting in some situations in the previous version
+* TWEAK: Remove vendor/aws/aws-crt-php/run_tests.bat from build (apparently one user's hosting does not allow .bat files), plus other unnecessary files from that package
+* TWEAK: Enable PHP 8.1 in UpdraftClone (N.B. not yet officially supported by WordPress, so, made available for testing/development purposes)
+* TWEAK: Prevent error emitted on the browser console when 'Images' filter is selected on UpdraftCentral's media module
 
 = 1.22.4 - 17/Feb/2022 =
 
@@ -1457,4 +1551,4 @@ Reliance upon any non-English translation is at your own risk; UpdraftPlus can g
 We recognise and thank those mentioned at https://updraftplus.com/acknowledgements/ for code and/or libraries used and/or modified under the terms of their open source licences.
 
 == Upgrade Notice ==
-* 1.22.4: Fixes a conflict with plugins using guzzlehttp 6/7 and with a buggy JetPack autloader. N.B. 1.22.3 fixed a security issue (see the changelog for more info) on sites that have non-trusted logins. A recommended update for all.
+* 1.22.14: Various tweaks and fixes, the ability to select a charset when restoring via WP-CLI. See changelog for full details. A recommended update for all.
