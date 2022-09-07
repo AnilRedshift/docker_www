@@ -85,7 +85,7 @@ services:
     command: []
 
   db:
-    image: mariadb:10.5-focal
+    image: mariadb:10.9-jammy
     restart: 'on-failure'
     env_file:
       - ./secrets/db.env

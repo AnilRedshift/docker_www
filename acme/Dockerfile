@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.16
 ARG LETS_ENCRYPT_EMAIL
 ENV LETS_ENCRYPT_EMAIL $LETS_ENCRYPT_EMAIL
 RUN apk --update add --no-cache openssl openssh socat curl
