@@ -104,15 +104,6 @@ services:
       - ./www:/var/www:ro
       - ./secrets/certs:/etc/ssl/certs/private/terminal.space:ro
 
-  captions_please:
-    build:
-      context: ./captions_please
-    restart: always
-    env_file:
-      - ./secrets/captions_please.env
-    networks:
-      - www-network
-
 networks:
   www-network:
     driver: bridge
