@@ -20,8 +20,14 @@
         <img class="mwl__slider__image__thumbnail__low-res" data-src="">
         {{/if}}
       </div>
-      <img class="mwl__slider__image__thumbnail__high-res {{image.orientation}}" data-src="{{image.src}}" {{
-        @if(image.srcset && image.sizes) }} data-srcset="{{image.srcset}}" data-sizes="{{image.sizes}}" {{ /if }}>
+
+      {{@if(image.srcset && image.sizes) }}
+      <img class="mwl__slider__image__thumbnail__high-res {{image.orientation}}" data-src="{{image.src}}"
+        data-srcset="{{image.srcset}}" data-sizes="{{image.sizes}}">
+      {{#else}}
+      <img class="mwl__slider__image__thumbnail__high-res {{image.orientation}}" data-src="{{image.src}}">
+      {{/if}}
+
       <div id="image-map-{{index}}" class="image-map"></div>
     </div>
   </div>

@@ -2,15 +2,15 @@
 Contributors: TigrouMeow, kywyz
 Tags: lightbox, responsive, exif, media, gps, map, photography, photo, gutenberg, image, images, gallery, retina
 Requires at least: 5.0
-Tested up to: 5.9.3
+Tested up to: 6.0.1
 Requires PHP: 7.0
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 
 Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it!
 
 == Description ==
 
-Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it! Learn more about it here: [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
+Responsive Lightbox designed for photography which can also displays EXIF data. This lightbox is highly optimized and designed to be very fast and elegant. You will love it! Learn more about it here: [Meow Lightbox](https://meowapps.com/meow-lightbox/).
 
 === KEY FEATURES ===
 
@@ -36,7 +36,7 @@ Getting the Pro version will support us and the development of the plugin, and a
 - Slideshow: you can start a slideshow from the Lightbox.
 
 === IMPORTANT ===
-By default, the selector is set for the classes '.entry-content, .gallery, .mgl-gallery'. If you need the Lightbox to be active for more selectors, you will need to update the settings. The plugin will apply the lightbox for images contained by the selector. For more information, please check the [official page](https://meowapps.com/plugin/meow-lightbox/).
+By default, the selector is set for the classes '.entry-content, .gallery, .mgl-gallery'. If you need the Lightbox to be active for more selectors, you will need to update the settings. The plugin will apply the lightbox for images contained by the selector. For more information, please check the [official page](https://meowapps.com/meow-lightbox/).
 
 Languages: English.
 
@@ -51,14 +51,18 @@ Replace all the files. Nothing else to do.
 
 == Frequently Asked Questions ==
 
-Please have a look at [Meow Lightbox](https://meowapps.com/plugin/meow-lightbox/).
+Please have a look at [Meow Lightbox](https://meowapps.com/meow-lightbox/).
 
 == Changelog ==
+
+= 3.2.2 (2022/09/29) =
+* Fix: Compatibility with WordPress 6.0.1.
+* Add: Latest versions of packages.
+* Info: We absolutely need your help and motivation. You can do it by writing a review [here]( https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post). Thanks a lot :)
 
 = 3.2.1 (2022/04/21) =
 * Add: jQuery is not required anymore.
 * Fix: There were some random issues.
-* Info: We absolutely need your help and motivation. You can do it by writing a review [here]( https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post). Thanks a lot :)
 
 = 3.1.9 (2022/04/14) =
 * Add: Option for Output Buffering. That will avoid issues for some users.
