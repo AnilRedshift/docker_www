@@ -104,6 +104,13 @@ services:
       - ./www:/var/www:ro
       - ./secrets/certs:/etc/ssl/certs/private/terminal.space:ro
 
+  circles:
+    build:
+      context: ./circles
+    restart: always
+    networks:
+      - www-network
+
 networks:
   www-network:
     driver: bridge
