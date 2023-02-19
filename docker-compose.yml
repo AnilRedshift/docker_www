@@ -110,6 +110,12 @@ services:
     restart: always
     networks:
       - www-network
+  bread:
+    build:
+      context: ./bread
+    restart: always
+    networks:
+      - www-network
 
 networks:
   www-network:

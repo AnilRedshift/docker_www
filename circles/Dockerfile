@@ -3,9 +3,6 @@ FROM node:19-alpine3.17 as builder
 RUN set -ex && \
   apk update && \
   apk add --no-cache \
-  # python3 \
-  # make \
-  # g++ \
   git
 
 RUN git clone https://github.com/kcesar/focused-search-grid.git fsg
