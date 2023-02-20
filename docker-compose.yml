@@ -24,6 +24,7 @@ services:
       - ./nginx_reverse_proxy/server_common.conf:/etc/nginx/include.d/server_common.conf:ro
       - ./nginx_reverse_proxy/proxy_pass.conf:/etc/nginx/include.d/proxy_pass.conf:ro
       - ./secrets/certs:/etc/ssl/certs/private/terminal.space:ro
+      - ./secrets/bread_certs/archive/breadbitch.com:/etc/ssl/certs/private/breadbitch.com:ro
     networks:
       - www-network
       - acme-network
