@@ -4,7 +4,7 @@ RUN set -ex && \
   apk add --no-cache \
   git
 
-RUN echo version 2
+RUN echo version 3
 RUN git clone https://github.com/intentionally-left-nil/bread.git bread
 RUN cp bread/index.html /usr/share/nginx/html/index.html
 
